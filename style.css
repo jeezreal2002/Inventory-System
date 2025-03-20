@@ -265,6 +265,15 @@ tbody tr:hover{
         margin: 10% auto;
         width: 95%;
     }
+    .table-header{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .table-container{
+        padding: 5px;
+    }
 }
 
 /* Toast Notifications */
