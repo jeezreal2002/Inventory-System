@@ -12,6 +12,8 @@ const modalQuantity = document.getElementById('modal-quantity');
 const modalUnitPrice = document.getElementById('modal-unit-price');
 const closeBtn = document.querySelector('.close');
 const toastContainer = document.getElementById('toast-container');
+const searchInput = document.getElementById('searchInput');
+const itemCountSpan = document.getElementById('itemCount');
 
 let inventory = [];  // This holds all items in memory
 let editIndex = null; 
@@ -22,6 +24,7 @@ window.onload = () => {
   if (storedInventory) {
     inventory = JSON.parse(storedInventory);
     renderInventory();
+    updateItemCount(inventory.length);
   }
 };
 
@@ -109,38 +112,63 @@ itemForm.addEventListener('submit', (e) => {
   itemForm.reset();
   saveToLocalStorage();
   renderInventory();
+  updateItemCount(inventory.length);
   showToast('Item added successfully!');
 });
 
-
-
 // this is table added to the inventory
 
-function renderInventory() {
+function renderInventory(items = inventory) {
   inventoryBody.innerHTML = '';
 
-  inventory.forEach((item, index) => {
+  if (items.length === 0) {
+    inventoryBody.innerHTML = `
+      <tr>
+        <td colspan="5">
+          <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <p>No items found</p>
+          </div>
+        </td>
+      </tr>
+    `;
+    updateItemCount(0);
+    return;
+  }
+
+  items.forEach((item, index) => {
     const row = document.createElement('tr');
+    
+    // Highlight matching text if there's a search term
+    const searchTerm = searchInput.value.toLowerCase();
+    let itemName = item.itemName;
+    let description = item.description;
+
+    if (searchTerm) {
+      itemName = highlightText(item.itemName, searchTerm);
+      description = highlightText(item.description, searchTerm);
+    }
 
     row.innerHTML = `
-      <td>${item.itemName}</td>
-      <td>${item.description}</td>
+      <td>${itemName}</td>
+      <td>${description}</td>
       <td>${item.quantity}</td>
       <td><i class="fa-solid fa-peso-sign"></i> ${item.unitPrice.toFixed(2)}</td>
       <td class="actions">
         <button class="edit-btn" onclick="editItem(${index})">
-          <i class="fas fa-edit"></i>
-          Edit
+          <i class="fas fa-edit"></i> Edit
         </button>
         <button class="delete-btn" onclick="deleteItem(${index})">
-          <i class="fas fa-trash"></i>
-          Delete
+          <i class="fas fa-trash"></i> Delete
         </button>
       </td>
     `;
 
+    row.classList.add('search-animation');
     inventoryBody.appendChild(row);
   });
+
+  updateItemCount(items.length);
 }
 
 // Edit item button that displays the modal
@@ -176,7 +204,6 @@ window.onclick = function(event) {
   }
 }
 
-
 modalForm.addEventListener('submit', (e) => {
   e.preventDefault();
 
@@ -205,3 +232,31 @@ modalForm.addEventListener('submit', (e) => {
   renderInventory();
   showToast('Item updated successfully!');
 });
+
+// search event listener
+searchInput.addEventListener('input', handleSearch);
+
+// Search function
+function handleSearch() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const filteredInventory = inventory.filter(item => 
+        item.itemName.toLowerCase().includes(searchTerm) ||
+        item.description.toLowerCase().includes(searchTerm)
+    );
+    
+    renderInventory(filteredInventory);
+    updateItemCount(filteredInventory.length);
+}
+
+// Update item count
+function updateItemCount(count) {
+    itemCountSpan.textContent = `${count} item${count !== 1 ? 's' : ''}`;
+}
+
+// Helper function to highlight matching text
+function highlightText(text, searchTerm) {
+    if (!searchTerm) return text;
+    
+    const regex = new RegExp(`(${searchTerm})`, 'gi');
+    return text.replace(regex, '<span class="highlight">$1</span>');
+}
