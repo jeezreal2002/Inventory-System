@@ -38,15 +38,32 @@
             </form>
         </div>
 
+      
+
         <div class="table-container">
+            <div class="table-header">
+                <h2><i class="fas fa-list"></i> Inventory List</h2>
+
+                <div class="search-container">
+                    <div class="search-wrapper">
+                        <i class="fas fa-search search-icon"></i>
+                        <input  id="searchInput" placeholder="Search items...">
+                        <div class="search-stats">
+                            <span id="itemCount">0 items</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
             <table>
                 <thead>
                     <tr>
-                        <th>Item Name</th>
-                        <th>Description</th>
-                        <th>Quantity</th>
-                        <th>Unit Price</th>
-                        <th>Actions</th>
+                        <th><i class="fas fa-tag"></i> Item Name</th>
+                        <th><i class="fas fa-align-left"></i> Description</th>
+                        <th><i class="fas fa-cubes"></i> Quantity</th>
+                        <th><i class="fa-solid fa-peso-sign"></i> Unit Price</th>
+                        <th><i class="fas fa-cogs"></i> Actions</th>
                     </tr>
                 </thead>
                 <tbody id="inventory-body"></tbody>
