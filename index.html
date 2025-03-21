@@ -3,108 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventory Management System</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="landing.css">
+    <title>StockFlow - Smart Inventory Management</title>
 </head>
 <body>
-    <div class="container">
-        <h1><i class="fas fa-boxes"></i> Inventory Management</h1>
-        
-        <div class="form-container">
-            <form id="item-form">
-                <div class="form-group">
-                    <label for="item-name"><i class="fas fa-tag"></i> Item Name</label>
-                    <input type="text" id="item-name" required>
-                </div>
-          
-
-                <div class="formGroupLast">
-                    <div class="form-group">
-                        <label for="quantity"><i class="fas fa-cubes"></i> Quantity</label>
-                        <input type="number" id="quantity" required min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="unit-price"><i class="fa-solid fa-peso-sign"></i> Unit Price</label>
-                        <input type="number" step="0.01" id="unit-price" required min="0">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="description"><i class="fas fa-align-left"></i> Description</label>
-                    <textarea name="description" id="description" required cols="25" rows="5">
-
-                    </textarea>
-                    <!-- <input type="text" id="description" required> -->
-                </div>
-          
-                <button type="submit" class="submit"><i class="fas fa-plus"></i> Add Item</button>
-            </form>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-box-open"></i>
+                <span>StockFlow</span>
+            </div>
         </div>
+    </nav>
 
-      
-
-        <div class="table-container">
-            <div class="table-header">
-                <h2><i class="fas fa-list"></i> Inventory List</h2>
-
-                <div class="search-container">
-                    <div class="search-wrapper">
-                        <i class="fas fa-search search-icon"></i>
-                        <input  id="searchInput" placeholder="Search items...">
-                        <div class="search-stats">
-                            <span id="itemCount">0 items</span>
-                        </div>
+    <main class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Transform Your 
+                    <span class="gradient-text">Inventory Management</span>
+                </h1>
+                <p class="subtitle">Streamline your business operations with our powerful inventory management system. Track, manage, and optimize your stock in real-time.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Real-time Tracking</h3>
+                        <p>Monitor stock levels instantly</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bell"></i>
+                        <h3>Smart Alerts</h3>
+                        <p>Never run out of stock</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Analytics</h3>
+                        <p>Data-driven insights</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile Ready</h3>
+                        <p>Access anywhere</p>
                     </div>
                 </div>
 
+                <a href="log-sign.html" class="cta-button">
+                    Get Started Now
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th><i class="fas fa-tag"></i> Item Name</th>
-                        <th><i class="fas fa-align-left"></i> Description</th>
-                        <th><i class="fas fa-cubes"></i> Quantity</th>
-                        <th><i class="fa-solid fa-peso-sign"></i> Unit Price</th>
-                        <th><i class="fas fa-cogs"></i> Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="inventory-body"></tbody>
-            </table>
+            <div class="hero-visual">
+                <div class="main-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2897/2897676.png" alt="Inventory Management">
+                </div>
+                <div class="stat-card card-1">
+                    <i class="fas fa-boxes"></i>
+                    <div class="stat-content">
+                        <div class="stat-number">5000+</div>
+                        <div class="stat-label">Items Managed</div>
+                    </div>
+                </div>
+                <div class="stat-card card-2">
+                    <i class="fas fa-chart-pie"></i>
+                    <div class="stat-content">
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Accuracy Rate</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2><i class="fas fa-edit"></i> Edit Item</h2>
-            <form id="edit-form">
-                <div class="form-group">
-                    <label for="modal-item-name"><i class="fas fa-tag"></i> Item Name</label>
-                    <input type="text" id="modal-item-name" required>
-                </div>
-                <div class="form-group">
-                    <label for="modal-description"><i class="fas fa-align-left"></i> Description</label>
-                    <input type="text" id="modal-description" required>
-                </div>
-                <div class="form-group">
-                    <label for="modal-quantity"><i class="fas fa-cubes"></i> Quantity</label>
-                    <input type="number" id="modal-quantity" required min="0">
-                </div>
-                <div class="form-group">
-                    <label for="modal-unit-price"><i class="fas fa-dollar-sign"></i> Unit Price</label>
-                    <input type="number" step="0.01" id="modal-unit-price" required min="0">
-                </div>
-                <button type="submit" class="submit"><i class="fas fa-save"></i> Update Item</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="toast-container"></div>
-
-    <script src="script.js"></script>
+    </main>
 </body>
 </html>
