@@ -274,8 +274,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // Simulate API call
             await new Promise(resolve => setTimeout(resolve, 1500));
 
+            // Get latest users from localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            
             // Check credentials
             const user = users.find(u => u.email === email && u.password === password);
+            
             if (!user) {
                 throw new Error('Invalid email or password');
             }
